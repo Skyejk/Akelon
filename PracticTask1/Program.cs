@@ -8,7 +8,7 @@ namespace PracticTask1
     {
         static void Main(string[] args)
         {
-            var VacationDictionary = new Dictionary<string, List<DateTime>>()
+            var vacationDictionary = new Dictionary<string, List<DateTime>>()
             {
                 ["Иванов Иван Иванович"] = new List<DateTime>(),
                 ["Петров Петр Петрович"] = new List<DateTime>(),
@@ -17,82 +17,69 @@ namespace PracticTask1
                 ["Павлов Павел Павлович"] = new List<DateTime>(),
                 ["Георгиев Георг Георгиевич"] = new List<DateTime>()
             };
-            var AviableWorkingDaysOfWeekWithoutWeekends = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
-            // Список отпусков сотрудников
-            List<DateTime> Vacations = new List<DateTime>();
-            var AllVacationCount = 0;
-            List<DateTime> dateList = new List<DateTime>();
-            List<DateTime> SetDateList = new List<DateTime>();
-            foreach (var VacationList in VacationDictionary)
+
+            var availableWorkingDaysOfWeekWithoutWeekends = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
+            List<DateTime> vacations = new List<DateTime>();
+            int allVacationCount = 0;
+
+            Random gen = new Random();
+
+            foreach (var vacationList in vacationDictionary)
             {
-                Random gen = new Random();
-                Random step = new Random();
-                DateTime start = new DateTime(DateTime.Now.Year, 1, 1);
-                DateTime end = new DateTime(DateTime.Today.Year, 12, 31);
-                dateList = VacationList.Value;
+                var dateList = vacationList.Value;
                 int vacationCount = 28;
+
                 while (vacationCount > 0)
                 {
+                    DateTime start = new DateTime(DateTime.Now.Year, 1, 1);
+                    DateTime end = new DateTime(DateTime.Today.Year, 12, 31);
                     int range = (end - start).Days;
+
                     var startDate = start.AddDays(gen.Next(range));
 
-                    if (AviableWorkingDaysOfWeekWithoutWeekends.Contains(startDate.DayOfWeek.ToString()))
+                    if (availableWorkingDaysOfWeekWithoutWeekends.Contains(startDate.DayOfWeek.ToString()))
                     {
-                        string[] vacationSteps = { "7", "14" };
-                        int vacIndex = gen.Next(vacationSteps.Length);
-                        var endDate = new DateTime(DateTime.Now.Year, 12, 31);
-                        float difference = 0;
-                        if (vacationSteps[vacIndex] == "7")
+                        int vacationLength = (vacationCount <= 7) ? 7 : gen.Next(7, 15);
+                        var endDate = startDate.AddDays(vacationLength);
+
+                        bool canCreateVacation = true;
+
+                        if (vacations.Any(element => element >= startDate && element < endDate))
                         {
-                            endDate = startDate.AddDays(7);
-                            difference = 7;
-                        }
-                        if (vacationSteps[vacIndex] == "14")
-                        {
-                            endDate = startDate.AddDays(14);
-                            difference = 14;
+                            canCreateVacation = false;
                         }
 
-                        if (vacationCount <= 7)
-                        {
-                            endDate = startDate.AddDays(7);
-                            difference = 7;
-                        }
-
-                        // Проверка условий по отпуску
-                        bool CanCreateVacation = false;
-                        bool existStart = false;
-                        bool existEnd = false;
-                        if (!Vacations.Any(element => element >= startDate && element <= endDate))
-                        {
-                            if (!Vacations.Any(element => element.AddDays(3) >= startDate && element.AddDays(3) <= endDate))
-                            {
-                                existStart = dateList.Any(element => element.AddMonths(1) >= startDate && element.AddMonths(1) >= endDate);
-                                existEnd = dateList.Any(element => element.AddMonths(-1) <= startDate && element.AddMonths(-1) <= endDate);
-                                if (!existStart || !existEnd)
-                                    CanCreateVacation = true;
-                            }
-                        }
-
-                        if (CanCreateVacation)
+                        if (canCreateVacation)
                         {
                             for (DateTime dt = startDate; dt < endDate; dt = dt.AddDays(1))
                             {
-                                Vacations.Add(dt);
+                                vacations.Add(dt);
                                 dateList.Add(dt);
                             }
-                            AllVacationCount++;
-                            vacationCount -= vacationCount - Convert.ToInt32(difference);
+                            allVacationCount++;
+                            vacationCount -= vacationLength;
                         }
                     }
                 }
             }
-            foreach (var VacationList in VacationDictionary)
+
+            foreach (var vacationList in vacationDictionary)
             {
-                SetDateList = VacationList.Value;
-                Console.WriteLine("Дни отпуска " + VacationList.Key + " : ");
-                for (int i = 0; i < SetDateList.Count; i++) { Console.WriteLine(SetDateList[i]); }
+                var setDateList = vacationList.Value;
+                Console.WriteLine($"Дни отпуска {vacationList.Key} : ");
+                if (setDateList.Count > 0)
+                {
+                    foreach (var date in setDateList)
+                    {
+                        Console.WriteLine(date);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Нет назначенных отпусков.");
+                }
             }
+
             Console.ReadKey();
         }
     }
