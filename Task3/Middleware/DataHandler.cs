@@ -58,6 +58,25 @@ namespace Task3.Middleware
             }
         }
 
+        public void UpdateContactPerson(IXLWorksheet customersSheet, string customerOrganization, string newContactPerson)
+        {
+            var customerRow = customersSheet.RowsUsed().Skip(1)
+                .FirstOrDefault(r => r.Cell(2).GetString() == customerOrganization); //Сразу выбираем строку с нужной организацией
+
+            if (customerRow != null)
+            {
+                var oldContactPerson = customerRow.Cell(4).GetString();
+                customerRow.Cell(4).Value = newContactPerson;
+
+                Console.WriteLine($"Контактное лицо клиента '{customerOrganization}' успешно изменено. " +
+                    $"Старое контактное лицо: {oldContactPerson}, Новое контактное лицо: {newContactPerson}");
+            }
+            else
+            {
+                Console.WriteLine($"Клиент с названием организации '{customerOrganization}' не найден.");
+            }
+        }
+
         public void FindGoldenCustomer(IXLWorksheet ordersSheet, IXLWorksheet customersSheet, int year, int month)
         {
             var orderRows = ordersSheet.RowsUsed().Skip(1);
@@ -97,6 +116,5 @@ namespace Task3.Middleware
                 Console.WriteLine($"Заказов за {month}.{year} не найдено.");
             }
         }
-
     }
 }
