@@ -9,10 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.102.3" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

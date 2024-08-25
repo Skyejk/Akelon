@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PracticTask3.Controllers
+namespace PracticTask3.Views
 {
-    public abstract class Controller
+    internal class Menu
     {
-        public abstract void GetAll();
     }
 }

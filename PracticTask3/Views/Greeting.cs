@@ -18,10 +18,7 @@ namespace PracticTask3.Views
 
             using (DataHandler dataHandler = new DataHandler(filePath))
             {
-                dataHandler.Menu();
             }
-
-            LogicIO.Input();
         }
     }
 }
