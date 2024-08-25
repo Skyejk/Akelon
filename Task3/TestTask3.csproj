@@ -119,13 +119,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="domain\controllers\Client.cs" />
+    <Compile Include="domain\controllers\Controller.cs" />
     <Compile Include="domain\controllers\Order.cs" />
     <Compile Include="domain\controllers\Product.cs" />
+    <Compile Include="domain\models\ClientInfoByProduct.cs" />
+    <Compile Include="domain\models\ContactPerson.cs" />
     <Compile Include="domain\models\DataHandler.cs" />
     <Compile Include="domain\models\DataLoader.cs" />
+    <Compile Include="domain\models\GoldenClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="view\ConsoleUI.cs" />
+    <Compile Include="views\Greeting.cs" />
+    <Compile Include="views\IOLogic.cs" />
+    <Compile Include="views\Menu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,12 +1,15 @@
 ﻿using System;
+using Task3.views;
 
 namespace Task3
 {
     class Program
     {
-        void Main(string[] args)
+        static void Main(string[] args)
         {
-           
+            Greeting greeting = new Greeting();
+
+            IOLogic.Input();
         }
     }
 }
