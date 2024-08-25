@@ -119,7 +119,9 @@
     <h2> Решение третьего задания </h2>
   </summary>
 
-  ### Находится в разработке, проявите терпение.
+  <h3> Приложение написано и находится <a href="https://github.com/Skyejk/Akelon/tree/main/Task3"> тут</a>. </h3>
+
+  <img src="https://github.com/Skyejk/Akelon/blob/main/Resources/Screenshots/ScreenshotAkelonTask3.png">
   
 </details>
 
