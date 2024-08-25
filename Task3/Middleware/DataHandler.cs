@@ -58,6 +58,45 @@ namespace Task3.Middleware
             }
         }
 
-           
+        public void FindGoldenCustomer(IXLWorksheet ordersSheet, IXLWorksheet customersSheet, int year, int month)
+        {
+            var orderRows = ordersSheet.RowsUsed().Skip(1);
+
+            var customerOrders = new Dictionary<string, int>();
+
+            foreach (var row in orderRows)
+            {
+                var orderDate = row.Cell(6).GetDateTime();
+
+                if (orderDate.Year == year && orderDate.Month == month)
+                {
+                    var customerCode = row.Cell(3).GetString();
+                    if (customerOrders.ContainsKey(customerCode))
+                    {
+                        customerOrders[customerCode]++;
+                    }
+                    else
+                    {
+                        customerOrders.Add(customerCode, 1);
+                    }
+                }
+            }
+
+            if (customerOrders.Count > 0)
+            {
+                var goldenCustomerCode = customerOrders.OrderByDescending(c => c.Value).First().Key;
+                var customerRow = customersSheet.RowsUsed().Skip(1)
+                .FirstOrDefault(r => r.Cell(1).GetString() == goldenCustomerCode);
+                if (customerRow != null)
+                {
+                    Console.WriteLine($"Золотой клиент за {month}.{year}: {customerRow.Cell(2).GetString()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Заказов за {month}.{year} не найдено.");
+            }
+        }
+
     }
 }
