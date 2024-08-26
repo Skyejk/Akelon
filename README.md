@@ -150,7 +150,9 @@
     <h2> Решение четвертого задания </h2>
   </summary>
 
-  ### Находится в разработке, проявите терпение.
+  <h3> Задача выполнена и находится <a href="https://github.com/Skyejk/sql-queries/blob/main/AkelonTask4.sql"> тут</a>. </h3>
+  
+  <img src="https://github.com/Skyejk/Akelon/blob/main/Resources/Screenshots/ScreenshotAkelonTask4.png">
   
 </details>
 
